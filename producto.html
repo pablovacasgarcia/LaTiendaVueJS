@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La tienda - </title>
+    <link rel="stylesheet" href="src/css/normalize.css">
+</head>
+<body>
+    <header>
+        <!--Menú hamburguesa-->
+        <nav class="menu">
+            <input type="checkbox" id="checkbox" class="menu--toggle--input">
+                <label for="checkbox" class="menu--toggle--label">
+                    <div class="menu--toggle--bars"></div>
+                    <div class="menu--toggle--bars"></div>
+                    <div class="menu--toggle--bars"></div>
+                </label>
+            <ul class="menu--lista">
+                <li class="menu--lista--entrada">
+                    <a href="index.html" class="menu--lista--entrada__link">Inicio</a>
+                </li>
+                <li class="menu--lista--entrada">
+                    <a href="categoria.html" class="menu--lista--entrada__link">Hombre</a>
+                </li>
+                <li class="menu--lista--entrada">
+                    <a href="categoria.html" class="menu--lista--entrada__link">Mujer</a>
+                </li>
+                <li class="menu--lista--entrada">
+                    <a href="categoria.html" class="menu--lista--entrada__link">Accesorios</a>
+                </li>
+                <li class="menu--lista--entrada">
+                    <a href="login.html" class="menu--lista--entrada__link">Iniciar Sesión</a>
+                </li>
+            </ul>
+        </nav>
+        <!--Logo principal-->
+        <div class="logo">
+            <img src="src/img/logo.png" alt="Logo" class="logo--imagen">
+        </div>
+        <!--Inicio de sesión y carrito-->
+        <div class="acciones">
+            <div class="acciones--login">
+                <a href="login.html" class="acciones--login__link">Iniciar Sesión</a>
+            </div>
+            <div class="acciones--carrito">
+                <a href="carrito.html" class="acciones--carrito__link"><img src="src/img/carrito.png" alt="Cesta de la compra" class="acciones--carrito__icono"></a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!--Sección para todo los detalles de un producto-->
+        <section class="producto">
+            <article class="producto--imagenes">
+                <div class="producto--imagenes--imagen">
+                    <img src="" alt="">
+                </div>
+                <div class="producto--imagenes--imagen">
+                    <img src="" alt="">
+                </div>
+            </article>
+            <article class="producto--contenido">
+                <h2 class="producto--contenido--titulo">
+
+                </h2>
+                <p class="producto--contenido--precio"></p>
+                <ul class="producto--contenido--tallas">
+                    <li class="producto--contenido--talla">XS</li>
+                    <li class="producto--contenido--talla">S</li>
+                    <li class="producto--contenido--talla">M</li>
+                    <li class="producto--contenido--talla">L</li>
+                    <li class="producto--contenido--talla">XL</li>
+                </ul>
+                <button class="producto--contenido--añadir"></button>
+            </article>
+        </section>
+    </main>
+    <!--Footer-->
+    <footer>
+        <!--Primer nivel footer-->
+        <article class="ayuda">
+            <h4 class="ayuda--titulo">Ayuda</h4>
+        </article>
+        <article class="nosotros">
+            <h4 class="nosotros--titulo">Nosotros</h4>
+        </article>
+        <article class="legal">
+            <h4 class="legal--titulo">Legal</h4>
+        </article>
+        <article class="pagos">
+            <h4 class="pagos--titulo">Métodos de pago</h4>
+            <a href=""><img src="visa.png" alt="Visa Link"></a>
+            <a href=""><img src="mastercard.png" alt="Mastercard Link"></a>
+            <a href=""><img src="paypal.png" alt="Paypal Link"></a>
+        </article>
+        <!--Segundo nivel footer-->
+        <article class="rrss">
+            <a href=""><img src="youtube.png" alt="Youtube Link"></a>
+            <a href=""><img src="instagram.png" alt="Instagram Link"></a>
+            <a href=""><img src="twitter.png" alt="Twitter Link"></a>
+            <a href=""><img src="facebook.png" alt="Facebook Link"></a>
+        </article>
+    </footer>
+</body>
+</html>

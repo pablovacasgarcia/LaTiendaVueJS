@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La tienda</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="src/css/normalize.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <!--Menú hamburguesa-->
+            <nav class="menu">
+                <input type="checkbox" id="checkbox" class="menu--toggle--input">
+                    <label for="checkbox" class="menu--toggle--label">
+                        <div class="menu--toggle--bars"></div>
+                        <div class="menu--toggle--bars"></div>
+                        <div class="menu--toggle--bars"></div>
+                    </label>
+                    <ul class="menu--lista">
+                        <li @click="mostrarInicio" class="menu--lista--entrada">
+                            <p class="menu--lista--entrada__link">HOME</p>
+                        </li>
+                        <li v-for="category in categories" :key="category.id" class="menu--lista--entrada" @click="showProducts(category.name)">
+                            <p class="menu--lista--entrada__link">{{ category.name.toUpperCase() }}</p>
+                        </li>
+                    </ul>
+            </nav>
+            <!--Logo principal-->
+            <div class="logo" @click="mostrarInicio">
+                <img src="src/img/logo.png" alt="Logo" class="logo--imagen">
+            </div>
+            <!--Inicio de sesión y carrito-->
+            <div class="acciones">
+                <div class="acciones--carrito">
+                    <a href="carrito.html" class="acciones--carrito__link"><img src="src/img/carrito.png" alt="Cesta de la compra" class="acciones--carrito__icono"></a>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="inicio" id="inicio" v-if="inicio">
+                <!--Sección hero-->
+                <section class="hero">
+                    <article class="hero--article">
+                        <div class="hero--article--imagen">
+                            <img src="" alt="">
+                        </div>
+                        <p class="hero--article--texto"></p>
+                    </article>
+                    <article class="hero--article">
+                        <div class="hero--article--imagen">
+                            <img src="" alt="">
+                        </div>
+                        <p class="hero--article--texto"></p>
+                    </article>
+                </section>
+                <!--Sección banner-->
+                <section class="banner">
+                    <div class="banner--imagen">
+                        <img src="" alt="">
+                    </div>
+                    <div class="banner--contenido">
+                        <p class="banner--contenido--texto"></p>
+                    </div>
+                </section>
+                <!--Sección síguenos-->
+                <section class="siguenos">
+                    <div class="siguenos--imagen">
+        
+                    </div>
+                    <article class="siguenos--contenido">
+                        <div class="siguenos--contenido--texto">
+        
+                        </div>
+                        <div class="siguenos--contenido--rrss">
+                            <a href=""><img src="youtube.png" alt="Youtube Link"></a>
+                            <a href=""><img src="instagram.png" alt="Instagram Link"></a>
+                            <a href=""><img src="twitter.png" alt="Twitter Link"></a>
+                            <a href=""><img src="facebook.png" alt="Facebook Link"></a>
+                        </div>
+                    </article>
+                </section>
+                <!--Sección newsletter-->
+                <section class="newsletter">
+                    <h3 class="newsletter--titulo">ÚNETE A NUESTRO NEWSLETTER</h3>
+                    <h4 class="newsletter--subtitulo">y recibe ofertas exclusivas</h4>
+                    <input class="newsletter--input" type="email" placeholder="Escribe tu email y te enviaremos un correo de confirmación">
+                </section>
+            </div>
+            <!--Sección con todos los productos-->
+            <div class="productos" id="categoria" v-show="categoria">
+                <!--Articulo para cada uno de los productos-->
+                <article v-for="product in products" :key="product.id" class="producto" @click="showDetails(product.id)">
+                    <div class="producto--imagen">
+                        <img :src="product.image" :alt="product.title">
+                    </div>
+                    <h4 class="producto--texto">{{ product.title }}</h4>
+                    <p class="producto--precio">{{ product.price + '€' }}</p>
+                </article>
+            </div>
+            <!--Sección con con los detalles del producto-->
+            <div class="producto" id="producto" v-if="producto">
+                <div class="producto--imagenes--imagen">
+                        <img :src="details.image" :alt="details.title">
+                </div>
+                <article class="producto--contenido">
+                    <h2 class="producto--contenido--titulo">{{ details.title }}</h2>
+                    <p class="producto--contenido--descripcion">{{ details.description }}</p>
+                    <p class="producto--contenido--precio">{{ details.price }}</p>
+                    <p class="producto--contenido--valoracion">{{ details.rating }}</p>
+                    <button class="producto--contenido--añadir"></button>
+                </article>
+            </div>
+        </main>
+        <!--Footer-->
+        <footer>
+            <!--Primer nivel footer-->
+            <article class="ayuda">
+                <h4 class="ayuda--titulo">Ayuda</h4>
+            </article>
+            <article class="nosotros">
+                <h4 class="nosotros--titulo">Nosotros</h4>
+            </article>
+            <article class="legal">
+                <h4 class="legal--titulo">Legal</h4>
+            </article>
+            <article class="pagos">
+                <h4 class="pagos--titulo">Métodos de pago</h4>
+                <a href=""><img src="visa.png" alt="Visa Link"></a>
+                <a href=""><img src="mastercard.png" alt="Mastercard Link"></a>
+                <a href=""><img src="paypal.png" alt="Paypal Link"></a>
+            </article>
+            <!--Segundo nivel footer-->
+            <article class="rrss">
+                <a href=""><img src="youtube.png" alt="Youtube Link"></a>
+                <a href=""><img src="instagram.png" alt="Instagram Link"></a>
+                <a href=""><img src="twitter.png" alt="Twitter Link"></a>
+                <a href=""><img src="facebook.png" alt="Facebook Link"></a>
+            </article>
+        </footer>
+    </div>
+</body>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                inicio: true,
+                categoria: false,
+                producto: false,
+                carrito: false,
+                categories: [],
+                products: [],
+                details: null           
+            };
+        },
+        methods: {
+            showProducts(category) {
+                // Actualiza la categoría seleccionada
+                this.selectedCategory = category;
+
+                // Realiza una solicitud para obtener los productos de la categoría seleccionada
+                fetch(`https://fakestoreapi.com/products/category/${category}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.products = data;
+                    });
+
+                // Muestra la sección de productos
+                this.categoria = true;
+
+                //Oculta el resto
+                this.inicio=false;
+                this.producto=false;
+                this.carrito=false;
+            }, 
+
+            mostrarInicio(){
+                // Muestra la sección de inicio
+                this.inicio = true;
+
+                //Oculta el resto
+                this.categoria = false;
+                this.producto = false;
+                this.carrito = false;
+            }, 
+
+            showDetails(idProduct){
+                // Realiza una solicitud para obtener los productos de la categoría seleccionada
+                fetch(`https://fakestoreapi.com/products/${idProduct}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.details = data;
+                    });
+
+                // Muestra la sección de productos
+                this.producto = true;
+
+                //Oculta el resto
+                this.inicio=false;
+                this.categoria=false;
+                this.carrito=false;
+            }
+            
+        },
+        computed: {
+            
+        },
+        mounted() {
+            fetch('https://fakestoreapi.com/products/categories')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.categories = data.map((name, id) => ({ id, name }));
+                    });
+        }
+    }).mount("#app");
+</script>
+
+</html>
