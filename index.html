@@ -6,6 +6,7 @@
     <title>La tienda</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="src/css/normalize.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,56 +29,88 @@
                     </ul>
             </nav>
             <!--Logo principal-->
-            <div class="logo" @click="mostrarInicio">
-                <img src="src/img/logo.png" alt="Logo" class="logo--imagen">
+            <div class="logo">
+                <h1  class="logo--link" @click="mostrarInicio">La tienda</h1>
             </div>
             <!--Inicio de sesión y carrito-->
             <div class="acciones">
                 <div class="acciones--carrito">
-                    <a href="carrito.html" class="acciones--carrito__link"><img src="src/img/carrito.png" alt="Cesta de la compra" class="acciones--carrito__icono"></a>
+                    <span @click="showCart" href="carrito.html" class="acciones--carrito__link"><i class="ri-shopping-bag-line"></i></span>
                 </div>
             </div>
         </header>
         <main>
-            <div class="inicio" id="inicio" v-if="inicio">
+            <div class="container" id="inicio" v-if="inicio">
                 <!--Sección hero-->
                 <section class="hero">
-                    <article class="hero--article">
-                        <div class="hero--article--imagen">
-                            <img src="" alt="">
-                        </div>
-                        <p class="hero--article--texto"></p>
-                    </article>
-                    <article class="hero--article">
-                        <div class="hero--article--imagen">
-                            <img src="" alt="">
-                        </div>
-                        <p class="hero--article--texto"></p>
-                    </article>
+                    <div class="hero--imagen">
+                        <img src="https://images.ecestaticos.com/V-TXSGON-m_bKHNwKpWvqkHB_Q0=/0x0:1999x1576/1338x1053/filters:fill(white):format(.JPG)/f.elconfidencial.com/original/01e/c6f/738/01ec6f738da17f786714de8c4083d872.jpg" alt="hero2">
+                    </div>
+                    <div class="hero--imagen">
+                        <img src="https://a1.eestatic.com/metropoliabierta/2021/05/31/vivir-en-barcelona/585451451_9426454_1706x960.jpg" alt="hero">
+                    </div>
+                    <div class="hero--contenido">
+                        <p>No necesitas ser nuevo para marcar tendencia</p>
+                    </div>
                 </section>
                 <!--Sección banner-->
                 <section class="banner">
                     <div class="banner--imagen">
-                        <img src="" alt="">
+                        <img src="https://fotografias.antena3.com/clipping/cmsimages02/2022/02/08/65C13E6A-E9F2-4375-9060-A8D305A28134/tienda-ropa-segunda-mano_98.jpg?crop=1920,1080,x0,y200&width=1900&height=1069&optimize=high&format=webply" alt="banner">
                     </div>
                     <div class="banner--contenido">
-                        <p class="banner--contenido--texto"></p>
+                        <p class="banner--contenido--texto">No es "una" tienda, es <span class="logo--link">La tienda</span></p>
                     </div>
                 </section>
+                <!--Sección carousel-->
+                <section class="carousel">
+                    <div class="carousel--imagenes">
+                        <div class="carousel--imagen">
+                            <img src="https://lp2.hm.com/hmgoepprod?source=url[https://www2.hm.com/content/dam/global_campaigns/season_08/home/7078-holiday/7078f/editorial/7078F-holiday-shop-HUB-teaser-edi-16x9.jpg]&scale=size[1200]&sink=format[jpeg],quality[80]" alt="Imagen 1">
+                            <p class="carousel--texto">Decora tu navidad</p>
+                        </div>
+                        <div class="carousel--imagen">
+                            <img src="https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Ff6%2F31%2Ff631f56252089c01a1ba8339c6074ba19b0dcc0f.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D" alt="Imagen 2">
+                            <p class="carousel--texto">Para los más pequeños</p>
+                        </div>
+                        <div class="carousel--imagen">
+                            <img src="https://edicionessibila.com/wp-content/uploads/2022/08/FA22_THMONO_ASSET.jpg" alt="Imagen 3">
+                            <p class="carousel--texto">Abrígate con estilo</p>
+                        </div>
+                    </div>
+                </section>
+                
+                
+                <!--JavaScript para el carrousel-->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const carousel = document.querySelector(".carousel--imagenes");
+                        const images = document.querySelectorAll(".carousel--imagen");
+                        let currentIndex = 0;
+
+                        setInterval(() => {
+                            currentIndex = (currentIndex + 1) % images.length;
+                            const translateValue = -currentIndex * 100;
+                            carousel.style.transform = `translateX(${translateValue}%)`;
+                        }, 3000); // Cambiar cada 3 segundos
+                    });
+                </script>
+
+
                 <!--Sección síguenos-->
                 <section class="siguenos">
                     <div class="siguenos--imagen">
-        
+                        <img src="https://hips.hearstapps.com/hmg-prod/images/tiendas-ropa-mujer-madrid-645e038123d62.jpg" alt="Tienda">
                     </div>
                     <article class="siguenos--contenido">
                         <div class="siguenos--contenido--texto">
-        
+                            <p>Síguenos en nuestras redes sociales y entérate de las últimas ofertas y promociones...</p>
                         </div>
-                        <div class="siguenos--contenido--rrss">
-                            <a href=""><img src="youtube.png" alt="Youtube Link"></a>
-                            <a href=""><img src="instagram.png" alt="Instagram Link"></a>
-                            <a href=""><img src="twitter.png" alt="Twitter Link"></a>
-                            <a href=""><img src="facebook.png" alt="Facebook Link"></a>
+                        <div class="rrss">
+                            <a href=""><i class="ri-youtube-fill"></i></a>
+                            <a href=""><i class="ri-instagram-fill"></i></a>
+                            <a href=""><i class="ri-twitter-fill"></i></a>
+                            <a href=""><i class="ri-facebook-fill"></i></a>
                         </div>
                     </article>
                 </section>
@@ -85,7 +118,7 @@
                 <section class="newsletter">
                     <h3 class="newsletter--titulo">ÚNETE A NUESTRO NEWSLETTER</h3>
                     <h4 class="newsletter--subtitulo">y recibe ofertas exclusivas</h4>
-                    <input class="newsletter--input" type="email" placeholder="Escribe tu email y te enviaremos un correo de confirmación">
+                    <input class="newsletter--input" type="email" placeholder="Déjanos tu email">
                 </section>
             </div>
             <!--Sección con todos los productos-->
@@ -100,43 +133,71 @@
                 </article>
             </div>
             <!--Sección con con los detalles del producto-->
-            <div class="producto" id="producto" v-if="producto">
+            <div class="detalles" id="producto" v-if="producto">
                 <div class="producto--imagenes--imagen">
                         <img :src="details.image" :alt="details.title">
                 </div>
                 <article class="producto--contenido">
                     <h2 class="producto--contenido--titulo">{{ details.title }}</h2>
                     <p class="producto--contenido--descripcion">{{ details.description }}</p>
-                    <p class="producto--contenido--precio">{{ details.price }}</p>
+                    <p class="producto--contenido--precio">{{ details.price }}€</p>
                     <p class="producto--contenido--valoracion">{{ details.rating }}</p>
-                    <button class="producto--contenido--añadir"></button>
+                    <button class="producto--contenido--añadir" @click="addToCart(details)">Añadir al carrito</button>
                 </article>
             </div>
+            <!-- Sección para el carrito -->
+            <div class="cesta" v-if="carrito">
+                <article v-for="item in cart" :key="item.id" class="cesta--producto">
+                    <div>
+                        <img :src="item.image" :alt="item.title" class="cesta--producto--imagen">
+                    </div>
+                    <h3 class="cesta--producto--nombre">{{ item.title }}</h3>
+                    <p class="cesta--producto--precio">{{ item.price * item.quantity }}€</p>
+                    <div class="producto--acciones">
+                        <p @click="increaseQuantity(item)">+</p>
+                        <p class="cesta--producto--cantidad">{{ item.quantity }}</p>
+                        <p @click="decreaseQuantity(item)">-</p>
+                        <i @click="removeFromCart(item)" class="ri-delete-bin-line"></i>
+                    </div>
+                </article>
+                <div class="cesta--total">
+                    <p class="total--precio">{{ calculateTotal() }}€</p>
+                    <button class="total--pago"><i class="ri-bank-card-fill"></i> Proceder al pago</button>
+                </div>
+            </div>
+
+
         </main>
         <!--Footer-->
         <footer>
             <!--Primer nivel footer-->
             <article class="ayuda">
                 <h4 class="ayuda--titulo">Ayuda</h4>
+                <p>Preguntas frecuentes</p>
+                <p>Soporte</p>
             </article>
             <article class="nosotros">
                 <h4 class="nosotros--titulo">Nosotros</h4>
+                <p>Acerca de La tienda</p>
+                <p>Ubicación y contacto</p>
             </article>
             <article class="legal">
                 <h4 class="legal--titulo">Legal</h4>
+                <p>Política de cookies</p>
+                <p>Privacidad</p>
             </article>
             <article class="pagos">
                 <h4 class="pagos--titulo">Métodos de pago</h4>
-                <a href=""><img src="visa.png" alt="Visa Link"></a>
-                <a href=""><img src="mastercard.png" alt="Mastercard Link"></a>
-                <a href=""><img src="paypal.png" alt="Paypal Link"></a>
+                <a href=""><i class="ri-visa-fill"></i></a>
+                <a href=""><i class="ri-mastercard-fill"></i></a>
+                <a href=""><i class="ri-paypal-fill"></i></a>
             </article>
             <!--Segundo nivel footer-->
             <article class="rrss">
-                <a href=""><img src="youtube.png" alt="Youtube Link"></a>
-                <a href=""><img src="instagram.png" alt="Instagram Link"></a>
-                <a href=""><img src="twitter.png" alt="Twitter Link"></a>
-                <a href=""><img src="facebook.png" alt="Facebook Link"></a>
+                <a href=""><i class="ri-youtube-fill"></i></a>
+                <a href=""><i class="ri-instagram-fill"></i></a>
+                <a href=""><i class="ri-twitter-fill"></i></a>
+                <a href=""><i class="ri-facebook-fill"></i></a>
             </article>
         </footer>
     </div>
@@ -154,7 +215,8 @@
                 carrito: false,
                 categories: [],
                 products: [],
-                details: null           
+                details: null,
+                cart: []           
             };
         },
         methods: {
@@ -203,6 +265,70 @@
                 this.inicio=false;
                 this.categoria=false;
                 this.carrito=false;
+            },
+
+            addToCart(product) {
+                // Compruebo el producto no esté en el carrito
+                if (!this.cart.find(item => item.id === product.id)) {
+                    this.cart.push({ ...product, quantity: 1 });
+                } else {
+                    // Incrementa la cantidad si el producto ya está en el carrito
+                    const cartItem = this.cart.find(item => item.id === product.id);
+                    cartItem.quantity++;
+                }
+
+                this.saveCartToLocalStorage();
+            },
+
+            showCart() {
+                // Muestra la sección del carrito
+                this.carrito = true;
+
+                // Oculta el resto
+                this.inicio = false;
+                this.categoria = false;
+                this.producto = false;
+            },
+
+            increaseQuantity(item) {
+                item.quantity++;
+
+                this.saveCartToLocalStorage();
+            },
+
+            decreaseQuantity(item) {
+                if (item.quantity > 1) {
+                    item.quantity--;
+                } else {
+                    this.removeFromCart(item)
+                }
+
+                this.saveCartToLocalStorage();
+            },
+
+            removeFromCart(item) {
+                const index = this.cart.indexOf(item);
+                this.cart.splice(index, 1);
+
+                this.saveCartToLocalStorage();
+            },
+
+            calculateTotal() {
+                return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+            },
+
+            saveCartToLocalStorage() {
+                // Guardar el carrito en localStorage
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+            },
+
+            loadCartFromLocalStorage() {
+                // Recuperar el carrito desde localStorage
+                const savedCart = localStorage.getItem('cart');
+
+                if (savedCart) {
+                    this.cart = JSON.parse(savedCart);
+                }
             }
             
         },
@@ -210,6 +336,9 @@
             
         },
         mounted() {
+            // Cargar el carrito desde localStorage al iniciar la aplicación
+            this.loadCartFromLocalStorage();
+
             fetch('https://fakestoreapi.com/products/categories')
                     .then(response => response.json())
                     .then(data => {
