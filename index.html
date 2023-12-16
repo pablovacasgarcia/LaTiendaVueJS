@@ -13,7 +13,7 @@
         <header>
             <!--Menú hamburguesa-->
             <nav class="menu">
-                <input type="checkbox" id="checkbox" class="menu--toggle--input">
+                <input type="checkbox" id="checkbox" class="menu--toggle--input" v-model="menu">
                     <label for="checkbox" class="menu--toggle--label">
                         <div class="menu--toggle--bars"></div>
                         <div class="menu--toggle--bars"></div>
@@ -40,6 +40,16 @@
             </div>
         </header>
         <main>
+            <div v-if="preload">
+                <div class="wrapper">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                </div>
+            </div>
             <div class="container" id="inicio" v-if="inicio">
                 <!--Sección hero-->
                 <section class="hero">
@@ -123,8 +133,14 @@
             </div>
             <!--Sección con todos los productos-->
             <div class="productos" id="categoria" v-show="categoria">
+                <div class="ordenar">
+                    <p @click="sortOrder='title'">Nombre</p>
+                    <p @click="sortOrder='price'">Precio</p>
+                    <p @click="sortDirection='asc'"><i class="ri-arrow-up-line"></i></p>
+                    <p @click="sortDirection='desc'"><i class="ri-arrow-down-line"></i></p>
+                </div>
                 <!--Articulo para cada uno de los productos-->
-                <article v-for="product in products" :key="product.id" class="producto" @click="showDetails(product.id)">
+                <article v-for="product in sortProducts" :key="product.id" class="producto" @click="showDetails(product.id)">
                     <div class="producto--imagen">
                         <img :src="product.image" :alt="product.title">
                     </div>
@@ -152,11 +168,11 @@
                         <img :src="item.image" :alt="item.title" class="cesta--producto--imagen">
                     </div>
                     <h3 class="cesta--producto--nombre">{{ item.title }}</h3>
-                    <p class="cesta--producto--precio">{{ item.price * item.quantity }}€</p>
+                    <p class="cesta--producto--precio">{{ item.price }}€</p>
                     <div class="producto--acciones">
-                        <p @click="increaseQuantity(item)">+</p>
+                        <a @click="increaseQuantity(item)"><i class="ri-add-line"></i></a>
                         <p class="cesta--producto--cantidad">{{ item.quantity }}</p>
-                        <p @click="decreaseQuantity(item)">-</p>
+                        <p @click="decreaseQuantity(item)"><i class="ri-subtract-line"></i></p>
                         <i @click="removeFromCart(item)" class="ri-delete-bin-line"></i>
                     </div>
                 </article>
@@ -213,14 +229,19 @@
                 categoria: false,
                 producto: false,
                 carrito: false,
+                menu:false,
                 categories: [],
                 products: [],
                 details: null,
-                cart: []           
+                cart: [], 
+                sortOrder: '',  //title o price
+                sortDirection: '', //asc o desc
+                preload: false
             };
         },
         methods: {
             showProducts(category) {
+                this.preload=true;
                 // Actualiza la categoría seleccionada
                 this.selectedCategory = category;
 
@@ -229,6 +250,7 @@
                     .then(response => response.json())
                     .then(data => {
                         this.products = data;
+                        this.preload=false;
                     });
 
                 // Muestra la sección de productos
@@ -238,6 +260,7 @@
                 this.inicio=false;
                 this.producto=false;
                 this.carrito=false;
+                this.menu=false;
             }, 
 
             mostrarInicio(){
@@ -248,23 +271,27 @@
                 this.categoria = false;
                 this.producto = false;
                 this.carrito = false;
+                this.menu=false;
             }, 
 
             showDetails(idProduct){
+                this.preload=true;
                 // Realiza una solicitud para obtener los productos de la categoría seleccionada
                 fetch(`https://fakestoreapi.com/products/${idProduct}`)
                     .then(response => response.json())
                     .then(data => {
                         this.details = data;
+                        // Muestra la sección de productos
+                        this.producto = true;
+                        this.preload=false;
                     });
 
-                // Muestra la sección de productos
-                this.producto = true;
-
+                
                 //Oculta el resto
                 this.inicio=false;
                 this.categoria=false;
                 this.carrito=false;
+                this.menu=false;
             },
 
             addToCart(product) {
@@ -288,6 +315,7 @@
                 this.inicio = false;
                 this.categoria = false;
                 this.producto = false;
+                this.menu=false;
             },
 
             increaseQuantity(item) {
@@ -314,7 +342,7 @@
             },
 
             calculateTotal() {
-                return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+                return this.cart.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
             },
 
             saveCartToLocalStorage() {
@@ -329,11 +357,24 @@
                 if (savedCart) {
                     this.cart = JSON.parse(savedCart);
                 }
-            }
+            },
             
         },
         computed: {
-            
+            sortProducts() {
+                return this.products.sort((a, b) => {
+                    const sortOrder = this.sortOrder;
+                    const sortDirection = this.sortDirection === 'asc' ? 1 : -1;
+
+                    if (a[sortOrder] < b[sortOrder]) {
+                        return -1 * sortDirection;
+                    }
+                    if (a[sortOrder] > b[sortOrder]) {
+                        return 1 * sortDirection;
+                    }
+                    return 0;
+                });
+            },
         },
         mounted() {
             // Cargar el carrito desde localStorage al iniciar la aplicación

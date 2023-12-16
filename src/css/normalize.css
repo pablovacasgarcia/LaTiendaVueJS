@@ -86,6 +86,10 @@ header a{
     justify-self: center;
 }
 
+.logo:hover{
+    cursor: pointer;
+}
+
 .acciones{
     justify-self: center;
     display: grid;
@@ -456,7 +460,7 @@ footer .rrss{
 }
 
 .productos {
-    padding-top: 20vh;
+    padding-top: 30vh;
     margin-bottom: 20vh;
     margin-left: 10vw;
     justify-self: center;
@@ -469,12 +473,32 @@ footer .rrss{
     align-content: center;
     justify-content: center;
     margin-top: 5vh;
+    gap: 50px;
+  }
+
+  .ordenar{
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    justify-content: right;
+    justify-self: right;
+    gap: 20px;
+    position: absolute;
+    left: 75%;
+    top: 25%;
+    font-weight: bold;
+  }
+
+  .ordenar p:hover{
+    cursor: pointer;
+    font-size: 110%;
+    color: rgb(96, 188, 240);
   }
 
   
   /* Estilo básico para cada artículo del producto */
   .producto {
-    width: 25vw;
+    width: 20vw;
     height: 50vh;
     padding: 15px;
     text-align: center;
@@ -510,42 +534,32 @@ footer .rrss{
     border-radius: 10px;
   }
 
-.detalles {
-    width: 80vw;
-    grid-row: 1 / -1;
-    display: flex;
-    justify-content: center;
-    gap: 5rem;
-    padding-top: 20vh;
-    margin-bottom: 10vh;
-    margin-left: 10vw;
-}
+    .detalles {
+        width: 80vw;
+        grid-row: 1 / -1;
+        display: flex;
+        justify-content: center;
+        gap: 5rem;
+        padding-top: 20vh;
+        margin-bottom: 10vh;
+        margin-left: 10vw;
+    }
   
   .producto--imagenes {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr; /* Dos filas, la primera se ajusta al contenido y la segunda también */
-    gap: 1%;
+    width: 50vw;
   }
   
-  .producto--imagenes--imagengrande {
-    width: 100%;
-    height: 70vh;
-  }
-
-  .producto--imagenes--imageneschicas{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1%;
+  .producto--imagenes--imagen {
+    width: 50vw;
+    height: 50vw;
   }
   
   
   /* Asegurar que las imágenes ocupen el 100% del ancho del contenedor */
-  .producto--imagenes img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .producto--imagenes--imagen img {
+    width: 50vw;
+    height: 50vw;
+    object-fit: contain;
     object-position: center;
   }
   
@@ -634,12 +648,7 @@ footer .rrss{
 .cesta--producto--imagen{
     width: 15vw;
     height: 10vw;
-}
-
-.cesta--producto--imagen img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .cesta--total{
@@ -667,6 +676,10 @@ footer .rrss{
     cursor: pointer;
 }
 
+.ri-subtract-line:hover, .ri-add-line:hover, .ri-shopping-bag-line:hover{
+    cursor: pointer;
+}
+
 .cesta--total {
     padding-bottom: 10vh;
     font-size: 200%;
@@ -690,7 +703,97 @@ footer .rrss{
     cursor: pointer;
 }
 
-
+.wrapper {
+    width: 200px;
+    height: 60px;
+    position: fixed;
+    z-index: 10;
+    top: 45%;
+    left: 45%;
+  }
+  
+  .circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #000;
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle7124 .5s alternate infinite ease;
+  }
+  
+  @keyframes circle7124 {
+    0% {
+      top: 60px;
+      height: 5px;
+      border-radius: 50px 50px 25px 25px;
+      transform: scaleX(1.7);
+    }
+  
+    40% {
+      height: 20px;
+      border-radius: 50%;
+      transform: scaleX(1);
+    }
+  
+    100% {
+      top: 0%;
+    }
+  }
+  
+  .circle:nth-child(2) {
+    left: 45%;
+    animation-delay: .2s;
+  }
+  
+  .circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+  
+  .shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.9);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow046 .5s alternate infinite ease;
+  }
+  
+  @keyframes shadow046 {
+    0% {
+      transform: scaleX(1.5);
+    }
+  
+    40% {
+      transform: scaleX(1);
+      opacity: .7;
+    }
+  
+    100% {
+      transform: scaleX(.2);
+      opacity: .4;
+    }
+  }
+  
+  .shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: .2s
+  }
+  
+  .shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+  
 
 
 
