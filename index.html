@@ -150,6 +150,9 @@
             </div>
             <!--Sección con con los detalles del producto-->
             <div class="detalles" id="producto" v-if="producto">
+                <div class="ordenar">
+                    <p @click="volver">Volver</p>
+                </div>
                 <div class="producto--imagenes--imagen">
                         <img :src="details.image" :alt="details.title">
                 </div>
@@ -342,7 +345,7 @@
             },
 
             calculateTotal() {
-                return this.cart.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
+                return this.cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
             },
 
             saveCartToLocalStorage() {
@@ -358,6 +361,11 @@
                     this.cart = JSON.parse(savedCart);
                 }
             },
+
+            volver(){
+                this.producto=false;
+                this.categoria=true;
+            }
             
         },
         computed: {
