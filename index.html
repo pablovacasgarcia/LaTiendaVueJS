@@ -74,7 +74,7 @@
                 </section>
                 <!--Sección carousel-->
                 <section class="carousel">
-                    <div class="carousel--imagenes">
+                    <div class="carousel--imagenes" :style="{ transform: 'translateX(' + translateValue + ')' }">
                         <div class="carousel--imagen">
                             <img src="https://lp2.hm.com/hmgoepprod?source=url[https://www2.hm.com/content/dam/global_campaigns/season_08/home/7078-holiday/7078f/editorial/7078F-holiday-shop-HUB-teaser-edi-16x9.jpg]&scale=size[1200]&sink=format[jpeg],quality[80]" alt="Imagen 1">
                             <p class="carousel--texto">Decora tu navidad</p>
@@ -89,23 +89,6 @@
                         </div>
                     </div>
                 </section>
-                
-                
-                <!--JavaScript para el carrousel-->
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const carousel = document.querySelector(".carousel--imagenes");
-                        const images = document.querySelectorAll(".carousel--imagen");
-                        let currentIndex = 0;
-
-                        setInterval(() => {
-                            currentIndex = (currentIndex + 1) % images.length;
-                            const translateValue = -currentIndex * 100;
-                            carousel.style.transform = `translateX(${translateValue}%)`;
-                        }, 3000); // Cambiar cada 3 segundos
-                    });
-                </script>
-
 
                 <!--Sección síguenos-->
                 <section class="siguenos">
@@ -160,12 +143,20 @@
                     <h2 class="producto--contenido--titulo">{{ details.title }}</h2>
                     <p class="producto--contenido--descripcion">{{ details.description }}</p>
                     <p class="producto--contenido--precio">{{ details.price }}€</p>
-                    <p class="producto--contenido--valoracion">{{ details.rating }}</p>
+                    <div class="valoracion">
+                        <p :style="{color : details.rating.rate > 0.5 ? 'rgb(96, 188, 240)' : 'gray'}"><i class="ri-star-fill"></i></p>
+                        <p :style="{color : details.rating.rate > 1.5 ? 'rgb(96, 188, 240)' : 'gray'}"><i class="ri-star-fill"></i></p>
+                        <p :style="{color : details.rating.rate > 2.5 ? 'rgb(96, 188, 240)' : 'gray'}"><i class="ri-star-fill"></i></p>
+                        <p :style="{color : details.rating.rate > 3.5 ? 'rgb(96, 188, 240)' : 'gray'}"><i class="ri-star-fill"></i></p>
+                        <p :style="{color : details.rating.rate > 4.5 ? 'rgb(96, 188, 240)' : 'gray'}"><i class="ri-star-fill"></i></p>
+                        <p class="producto--contenido--valoracion">Valoración: {{ details.rating.rate }} de {{ details.rating.count }} opiniones</p>
+                    </div>
                     <button class="producto--contenido--añadir" @click="addToCart(details)">Añadir al carrito</button>
                 </article>
             </div>
             <!-- Sección para el carrito -->
             <div class="cesta" v-if="carrito">
+                <p v-if="cart.length==0" class="carritovacio">No tienes productos en la cesta</p>
                 <article v-for="item in cart" :key="item.id" class="cesta--producto">
                     <div>
                         <img :src="item.image" :alt="item.title" class="cesta--producto--imagen">
@@ -179,7 +170,7 @@
                         <i @click="removeFromCart(item)" class="ri-delete-bin-line"></i>
                     </div>
                 </article>
-                <div class="cesta--total">
+                <div class="cesta--total" v-if="cart.length!=0">
                     <p class="total--precio">{{ calculateTotal() }}€</p>
                     <button class="total--pago"><i class="ri-bank-card-fill"></i> Proceder al pago</button>
                 </div>
@@ -239,7 +230,8 @@
                 cart: [], 
                 sortOrder: '',  //title o price
                 sortDirection: '', //asc o desc
-                preload: false
+                preload: false,
+                currentIndex: 0
             };
         },
         methods: {
@@ -383,6 +375,14 @@
                     return 0;
                 });
             },
+
+            translateValue() {
+                return -this.currentIndex * 100 + '%';
+            },
+
+            images() {
+                return document.querySelectorAll(".carousel--imagen");
+            },
         },
         mounted() {
             // Cargar el carrito desde localStorage al iniciar la aplicación
@@ -393,6 +393,10 @@
                     .then(data => {
                         this.categories = data.map((name, id) => ({ id, name }));
                     });
+
+            setInterval(() => {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+            }, 3000); // Cambiar carrousel cada 3 segundos        
         }
     }).mount("#app");
 </script>
