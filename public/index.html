@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La tienda</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link rel="stylesheet" href="src/css/normalize.css">
+    <link rel="stylesheet" href="./css/normalize.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
@@ -35,7 +35,7 @@
             <!--Inicio de sesión y carrito-->
             <div class="acciones">
                 <div class="acciones--carrito">
-                    <span @click="showCart" href="carrito.html" class="acciones--carrito__link"><i class="ri-shopping-bag-line"></i></span>
+                    <span @click="showCart" class="acciones--carrito__link"><i class="ri-shopping-bag-line"></i></span>
                 </div>
             </div>
         </header>
@@ -172,7 +172,15 @@
                 </article>
                 <div class="cesta--total" v-if="cart.length!=0">
                     <p class="total--precio">{{ calculateTotal() }}€</p>
-                    <button class="total--pago"><i class="ri-bank-card-fill"></i> Proceder al pago</button>
+                    <button class="total--pago" @click="hacerPedido"><i class="ri-bank-card-fill"></i> Proceder al pago</button>
+                </div>
+            </div>
+            <!-- Sección para el pedido -->
+            <div class="pedido" v-if="pedido">
+                <p class="pagorealizado"><i class="ri-shield-check-fill"></i></p>
+                <p>Pago realizado con éxito</p>
+                <div class="ordenar">
+                    <p @click="mostrarInicio">Volver</p>
                 </div>
             </div>
 
@@ -224,6 +232,7 @@
                 producto: false,
                 carrito: false,
                 menu:false,
+                pedido: false,
                 categories: [],
                 products: [],
                 details: null,
@@ -256,6 +265,7 @@
                 this.producto=false;
                 this.carrito=false;
                 this.menu=false;
+                this.pedido=false;
             }, 
 
             mostrarInicio(){
@@ -267,6 +277,7 @@
                 this.producto = false;
                 this.carrito = false;
                 this.menu=false;
+                this.pedido=false;
             }, 
 
             showDetails(idProduct){
@@ -287,6 +298,7 @@
                 this.categoria=false;
                 this.carrito=false;
                 this.menu=false;
+                this.pedido=false;
             },
 
             addToCart(product) {
@@ -311,6 +323,7 @@
                 this.categoria = false;
                 this.producto = false;
                 this.menu=false;
+                this.pedido=false;
             },
 
             increaseQuantity(item) {
@@ -357,6 +370,14 @@
             volver(){
                 this.producto=false;
                 this.categoria=true;
+            },
+
+            hacerPedido(){
+                this.cart=new Array;
+                this.carrito=false;
+                this.pedido=true;
+
+                this.saveCartToLocalStorage();
             }
             
         },

@@ -807,6 +807,19 @@ footer .rrss{
   }
   
 
+  .pedido{
+    margin-top: 40vh;
+    height: 50vh;
+    width: 100vw;
+    text-align: center;
+  }
+
+  .pagorealizado{
+    font-size: 900%;
+    color: green;
+    text-shadow: 1px 1px 10px gray;
+  }
+
 
 
   
